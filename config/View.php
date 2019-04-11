@@ -24,18 +24,22 @@ class View
 
     // CETTE FONCTION PERMET DE CAHRGER LES FICHIER VIEWS.
     // CETTE FONCTION SERA APPELEE AVEC DES ARGUMENTS DYNAMIQUEMENT
-    public function load($nameFile) {
+    public function load($nameFile)
+    {
 
-        $file = "view/".$nameFile.".php";
-
+        $file = "src/view/" . $nameFile . ".php";
+        try {
             if (file_exists($file)) {
                 $data = $this->data;
                 extract($data);
                 require_once $file;
-            }
-            else {
-                die("Cette vue n'existe pas");
+            } else {
+                throw new \Exception("Cette vue n'existe pas");
             }
 
+        }
+        catch (\Exception $e) {
+            require_once "src/view/errors/404.php";
+        }
     }
 }
