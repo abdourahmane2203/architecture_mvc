@@ -11,6 +11,6 @@ class ErrorHTTPController extends Controller
 
     public function errorHttp() {
         //$this->view->assign('errorMsg', 'PAGE NOT FOUND IN THIS SERVER');
-        return $this->view->load("errors/404");
+        //return $this->view->load("errors/404");
     }
 }

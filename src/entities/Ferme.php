@@ -5,7 +5,7 @@
  * Date: 10/04/2019
  * Time: 12:22
  */
-
+namespace src\entities;
 class Ferme
 {
     private $_id;

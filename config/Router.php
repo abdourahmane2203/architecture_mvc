@@ -31,6 +31,9 @@ class Router
                         if (method_exists($this->controller_object, 'getAll')) {
                             $this->controller_object->getAll();
                         }
+                        else {
+                            throw new \Exception("La methode getAll n'existe pas dans ce controller");
+                        }
                     }
                     //ON VERIFIE SI $url[2] EXISTE => LA METHODE A EXECUTER ex : delete($id)
                      // METHODE AVEC PARAMETRE
@@ -42,7 +45,7 @@ class Router
                         $this->controller_object->$method($url[2]);
                        }
                        else {
-                            throw new \Exception("Error parameter ! ");
+                            throw new \Exception("Error: Cette methode ne prend pas de parametre ! ");
                             // A COMPLETER => REDIRECTION VERS UNE PAGE D'ERREUR 404
                        }
                     }
@@ -52,6 +55,9 @@ class Router
                         if($url[1] == ""){
                             $url[1] = "getAll";
                         }
+                        else {
+                            throw new \Exception("Error : / la methode n'existe pas");
+                        }
                         //ex : localhost/nomProjet/user/getAll => $url[1] = getAll
                         $method = $url[1];
                         // ON VERIFIE SI LA METHODE getAll() EXISTE DANS LE CONTROLLER UserController
@@ -59,7 +65,7 @@ class Router
                             $this->controller_object->$method();
                         }
                         else {
-                            throw new \Exception("Error : Service not found");
+                            throw new \Exception("Error : Cette methode n'existe pas dans ce controller");
                             //=> ON CAPTE ET AFFICHE L'ERREUR
                         }
                     }
@@ -78,10 +84,13 @@ class Router
         }
         catch(\Exception $e) {
             // ON CAPTE LES ERREURS
+            // MODE PRODUCTION
             // ON APPEL UNE PAGE D'ERREUR not found 404.php
-            require_once "src/controller/ErrorHTTPController.php";
-            $this->controller_object = new \ErrorHTTPController();
-            $this->controller_object->errorHttp();
+            //require_once "src/controller/ErrorHTTPController.php";
+            //$this->controller_object = new \ErrorHTTPController();
+            //$this->controller_object->errorHttp();
+            // MODE DEVELOPPEMENT
+            echo $e->getMessage();
         }
     }
 }

@@ -1,37 +1,43 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Diallo
- * Date: 10/04/2019
- * Time: 12:18
+ * Date: 03/04/2019
+ * Time: 16:10
  */
 namespace src\model;
 use config\Model;
-class FermeDao extends Model
+use src\entities\Ferme;
+
+class FermesDao extends Model
 {
 
-    public function insert( $bject)
-    {
-        // TODO: Implement insert() method.
+    public function insert(Ferme $ferme) {
+
+        //$ferme->setNom($nom);
+        $sql = "INSERT INTO ferme (nom, date_creation) VALUES (:nom, :date_creation)";
+        $stm = $this->db->prepare($sql);
+        $stm->bindValue(':nom', $ferme->getNom());
+        $stm->bindValue(':date_creation', date("Ymd"));
+        $stm->execute();
+        if($stm) {
+            return $result = "Réussi";
+        }
+        else {
+            return $result = "Echec d'insertion";
+        }
     }
 
-    public function findAll()
-    {
-        return 'testData';
-    }
-
-    public function findOne($id)
-    {
-        // TODO: Implement findOne() method.
-    }
-
-    public function update($id)
-    {
-        // TODO: Implement update() method.
-    }
-
-    public function delete($id)
-    {
-        // TODO: Implement delete() method.
+    public function findAll() {
+        $sql = "SELECT * FROM ferme";
+        $exe = $this->db->query($sql);
+        if($exe) {
+            $fermes = [];
+            while($donnee = $exe->fetch()) {
+                $fermes [] = $donnee;
+            }
+            return $fermes;
+        }
     }
 }

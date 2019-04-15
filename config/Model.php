@@ -13,7 +13,7 @@ abstract class  Model
 
     // Instancie la connexion
      private static function setBdd(){
-      self::$_dbb = new PDO('mysql:host=localhost;dbname=mobillierdb;charset=utf8', 'root', '');
+      self::$_dbb = new PDO('mysql:host=localhost;dbname=ferme;charset=utf8', 'root', '');
       self::$_dbb->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
